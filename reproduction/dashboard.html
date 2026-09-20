@@ -71,7 +71,7 @@
 <p class="subtitle" style="margin-top:-1.5rem">Mean over successive 20-step blocks: 0.35, 0.39, 0.27, 0.49 (14, 12, 10, 15 non-zero steps). One run, no repeats; the curve is too noisy to call a trend.</p>
 
 <h2>Base vs. fine-tuned QA_F1, all 40 held-in examples</h2>
-<div class="legend"><span><span class="dot"></span>example (points above the diagonal improved after fine-tuning)</span></div>
+<div class="legend"><span><span class="dot"></span>each dot is one or more examples with the same scores; the number inside is how many. Above the diagonal = improved, below = regressed.</span></div>
 <div class="chart-wrap" style="height: 340px;">
   <canvas id="scatterChart" role="img" aria-label="Scatter plot comparing base model and fine-tuned model QA F1 score for each of 40 examples, with a diagonal reference line, points above the line improved after fine-tuning and points below regressed">Per-example comparison: 4 points sit above the diagonal (gains of 0.3 to 0.5), 11 sit below (including 1.0 to 0 and 0.5 to 0 losses), and 25 lie on it. Mean QA_F1 fell from 0.196 to 0.107.</canvas>
 </div>
@@ -115,7 +115,39 @@
 
   var base = [0.00,0.00,0.00,0.71,0.19,0.00,0.50,0.17,0.50,1.00,0.00,1.00,0.50,0.00,0.00,0.00,0.00,0.00,0.00,0.50,0.00,0.00,0.00,0.00,0.00,0.50,0.50,0.19,0.00,0.00,0.00,0.50,0.00,0.00,0.00,0.00,0.47,0.12,0.50,0.00];
   var trained = [0.32,0.00,0.00,0.50,0.00,0.00,0.50,0.17,0.00,0.00,0.00,0.00,0.50,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.50,0.00,0.00,0.50,0.00,0.00,0.00,0.00,0.40,0.00,0.00,0.00,0.00,0.00,0.44,0.43,0.00,0.00];
-  var points = base.map(function(b, i) { return { x: b, y: trained[i] }; });
+  // Many examples share the same (base, trained) score, so group identical points
+  // and size each dot by how many examples it stands for.
+  var groups = {};
+  base.forEach(function(b, i) {
+    var key = b.toFixed(2) + '|' + trained[i].toFixed(2);
+    if (!groups[key]) groups[key] = { x: b, y: trained[i], n: 0 };
+    groups[key].n += 1;
+  });
+  var points = Object.keys(groups).map(function(k) { return groups[k]; });
+
+  // Ticks at 0, 0.2 ... 1.0 only; the axis range is padded slightly so dots at 0 and 1 aren't clipped.
+  function fixedTicks(scale) {
+    scale.ticks = [0, 0.2, 0.4, 0.6, 0.8, 1].map(function(v) { return { value: v }; });
+  }
+  function tickLabel(v) { return v.toFixed(1); }
+
+  var countLabels = {
+    id: 'countLabels',
+    afterDatasetsDraw: function(chart) {
+      var ctx = chart.ctx;
+      var meta = chart.getDatasetMeta(1);
+      ctx.save();
+      ctx.fillStyle = '#0b0b0b';
+      ctx.font = '600 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      meta.data.forEach(function(el, i) {
+        var n = points[i].n;
+        if (n >= 2) ctx.fillText(String(n), el.x, el.y);
+      });
+      ctx.restore();
+    }
+  };
 
   new Chart(document.getElementById('scatterChart'), {
     type: 'scatter',
@@ -134,21 +166,35 @@
         {
           label: 'example',
           data: points,
-          backgroundColor: '#2a78d6',
-          pointRadius: 5,
-          pointHoverRadius: 7
+          backgroundColor: 'rgba(42,120,214,0.55)',
+          borderColor: '#2a78d6',
+          borderWidth: 1,
+          pointRadius: function(ctx) { return ctx.raw ? 4 + 2.6 * Math.sqrt(ctx.raw.n) : 5; },
+          pointHoverRadius: function(ctx) { return ctx.raw ? 6 + 2.6 * Math.sqrt(ctx.raw.n) : 7; }
         }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          filter: function(item) { return item.datasetIndex === 1; },
+          callbacks: {
+            label: function(item) {
+              var p = item.raw;
+              return p.n + (p.n === 1 ? ' example' : ' examples') + ': base ' + p.x.toFixed(2) + ', fine-tuned ' + p.y.toFixed(2);
+            }
+          }
+        }
+      },
       scales: {
-        x: { min: -0.05, max: 1.05, title: { display: true, text: 'base model QA_F1', color: '#898781' }, grid: { color: '#e1e0d9' }, ticks: { color: '#898781' } },
-        y: { min: -0.05, max: 1.05, title: { display: true, text: 'fine-tuned QA_F1', color: '#898781' }, grid: { color: '#e1e0d9' }, ticks: { color: '#898781' } }
+        x: { min: -0.05, max: 1.05, afterBuildTicks: fixedTicks, title: { display: true, text: 'base model QA_F1', color: '#898781' }, grid: { color: '#e1e0d9' }, ticks: { color: '#898781', callback: tickLabel } },
+        y: { min: -0.05, max: 1.05, afterBuildTicks: fixedTicks, title: { display: true, text: 'fine-tuned QA_F1', color: '#898781' }, grid: { color: '#e1e0d9' }, ticks: { color: '#898781', callback: tickLabel } }
       }
-    }
+    },
+    plugins: [countLabels]
   });
 })();
 </script>
