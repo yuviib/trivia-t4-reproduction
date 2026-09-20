@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRivia reproduction: reward and before/after dashboard</title>
+<style>
+  :root {
+    --surface-1: #f7f7f5;
+    --surface-2: #ffffff;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --border: #e1e0d9;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--surface-1);
+    color: var(--text-primary);
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+    line-height: 1.5;
+  }
+  h1 { font-size: 20px; font-weight: 500; margin: 0 0 4px; }
+  p.subtitle { color: var(--text-secondary); font-size: 14px; margin: 0 0 2rem; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 2rem; }
+  .card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; }
+  .card p.label { font-size: 13px; color: var(--text-secondary); margin: 0 0 4px; }
+  .card p.value { font-size: 22px; font-weight: 600; margin: 0; }
+  .card p.note { font-size: 12px; color: var(--text-muted); margin: 4px 0 0; }
+  h2 { font-size: 15px; font-weight: 600; margin: 0 0 8px; }
+  .chart-wrap { position: relative; width: 100%; margin-bottom: 2.5rem; }
+  .legend { display: flex; gap: 16px; margin-bottom: 8px; font-size: 12px; color: var(--text-secondary); }
+  .legend span.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #2a78d6; margin-right: 4px; }
+  footer { font-size: 12px; color: var(--text-muted); margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+</style>
+</head>
+<body>
+
+<h1>TRivia GRPO reproduction: reward and before/after results</h1>
+<p class="subtitle">Reproduction of TRivia (CVPR 2026, HKU-TASR) on a single free-tier T4 GPU. Real numbers pulled directly from training and evaluation logs.</p>
+
+<div class="cards">
+  <div class="card">
+    <p class="label">Trainable params</p>
+    <p class="value">0.4%</p>
+    <p class="note">14.97M of 3.77B (LoRA)</p>
+  </div>
+  <div class="card">
+    <p class="label">Reward-bearing steps</p>
+    <p class="value">12.5% &rarr; 64%</p>
+    <p class="note">run 1 vs. run 3; QA_F1 became non-zero once completion length was raised (config change, not learning)</p>
+  </div>
+  <div class="card">
+    <p class="label">Completions &ge; 0.9 QA</p>
+    <p class="value">25%</p>
+    <p class="note">101 of 401 logged</p>
+  </div>
+  <div class="card">
+    <p class="label">QA_F1, base &rarr; trained</p>
+    <p class="value">0.196 &rarr; 0.107</p>
+    <p class="note">on the 40 training examples; 4 up, 11 down, 25 unchanged; sign test p = 0.12</p>
+  </div>
+</div>
+
+<h2>QA_F1 reward across training (80 steps, run v3)</h2>
+<div class="chart-wrap" style="height: 240px;">
+  <canvas id="curveChart" role="img" aria-label="Line chart of QA F1 reward across 80 training steps, ranging from 0 to 1, highly variable with no clear upward trend">QA_F1 reward oscillates between 0 and 1 across 80 steps, non-zero on 51 of 80 steps.</canvas>
+</div>
+<p class="subtitle" style="margin-top:-1.5rem">Mean over successive 20-step blocks: 0.35, 0.39, 0.27, 0.49 (14, 12, 10, 15 non-zero steps). One run, no repeats; the curve is too noisy to call a trend.</p>
+
+<h2>Base vs. fine-tuned QA_F1, all 40 held-in examples</h2>
+<div class="legend"><span><span class="dot"></span>example (points above the diagonal improved after fine-tuning)</span></div>
+<div class="chart-wrap" style="height: 340px;">
+  <canvas id="scatterChart" role="img" aria-label="Scatter plot comparing base model and fine-tuned model QA F1 score for each of 40 examples, with a diagonal reference line, points above the line improved after fine-tuning and points below regressed">Per-example comparison: 4 points sit above the diagonal (gains of 0.3 to 0.5), 11 sit below (including 1.0 to 0 and 0.5 to 0 losses), and 25 lie on it. Mean QA_F1 fell from 0.196 to 0.107.</canvas>
+</div>
+
+<footer>
+  Data from training run v3 (40 examples, TEDS + structural reward + QA_F1, num_generations=4, max_completion_length=576) and its full before/after evaluation sweep.
+  These 40 examples are the training examples (held-in), evaluated with 2 samples each at temperature 1.0 through an LLM judge. The decline is not statistically distinguishable from noise (two-sided sign test on the 15 non-tied examples, p = 0.12). See <code>reproduction/WRITEUP.md</code> for what this does and doesn't show.
+  Original paper: <a href="https://arxiv.org/abs/2512.01248">TRivia (arXiv:2512.01248)</a>, code at <a href="https://github.com/HKU-TASR/TRivia">HKU-TASR/TRivia</a>.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function() {
+  var curve = [0.25,1.0,0.042,0.0,0.0,0.75,0.0,0.667,0.75,0.25,0.696,0.0,0.667,0.0,0.25,0.458,0.25,0.758,0.25,0.0,0.5,0.0,0.0,0.343,0.75,0.975,0.0,0.786,0.0,1.0,0.0,0.688,0.5,0.0,0.0,0.0,0.75,1.0,0.222,0.3,0.0,0.0,0.5,0.0,1.0,0.0,0.25,0.5,0.0,0.0,0.0,0.227,1.0,0.0,0.0,0.191,0.0,0.694,0.729,0.25,1.0,0.25,0.0,1.0,0.929,0.0,0.3,0.75,0.596,0.946,0.386,0.75,0.0,0.0,1.0,0.5,0.663,0.136,0.5,0.0];
+  var steps = curve.map(function(_, i) { return i + 1; });
+
+  new Chart(document.getElementById('curveChart'), {
+    type: 'line',
+    data: {
+      labels: steps,
+      datasets: [{
+        data: curve,
+        borderColor: '#2a78d6',
+        backgroundColor: 'rgba(42,120,214,0.1)',
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: true,
+        tension: 0.15
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 8, color: '#898781' }, title: { display: true, text: 'training step', color: '#898781' } },
+        y: { min: 0, max: 1, grid: { color: '#e1e0d9' }, ticks: { color: '#898781' } }
+      }
+    }
+  });
+
+  var base = [0.00,0.00,0.00,0.71,0.19,0.00,0.50,0.17,0.50,1.00,0.00,1.00,0.50,0.00,0.00,0.00,0.00,0.00,0.00,0.50,0.00,0.00,0.00,0.00,0.00,0.50,0.50,0.19,0.00,0.00,0.00,0.50,0.00,0.00,0.00,0.00,0.47,0.12,0.50,0.00];
+  var trained = [0.32,0.00,0.00,0.50,0.00,0.00,0.50,0.17,0.00,0.00,0.00,0.00,0.50,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.50,0.00,0.00,0.50,0.00,0.00,0.00,0.00,0.40,0.00,0.00,0.00,0.00,0.00,0.44,0.43,0.00,0.00];
+  var points = base.map(function(b, i) { return { x: b, y: trained[i] }; });
+
+  new Chart(document.getElementById('scatterChart'), {
+    type: 'scatter',
+    data: {
+      datasets: [
+        {
+          label: 'y=x',
+          data: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+          type: 'line',
+          borderColor: '#c3c2b7',
+          borderWidth: 1,
+          borderDash: [4, 4],
+          pointRadius: 0,
+          fill: false
+        },
+        {
+          label: 'example',
+          data: points,
+          backgroundColor: '#2a78d6',
+          pointRadius: 5,
+          pointHoverRadius: 7
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { min: -0.05, max: 1.05, title: { display: true, text: 'base model QA_F1', color: '#898781' }, grid: { color: '#e1e0d9' }, ticks: { color: '#898781' } },
+        y: { min: -0.05, max: 1.05, title: { display: true, text: 'fine-tuned QA_F1', color: '#898781' }, grid: { color: '#e1e0d9' }, ticks: { color: '#898781' } }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>

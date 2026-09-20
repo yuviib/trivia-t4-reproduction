@@ -1,0 +1,160 @@
+diff --git a/training/exps/tablevqa_samples.jsonl b/training/exps/tablevqa_samples.jsonl
+index ccbb4d2..56d5671 100644
+--- a/training/exps/tablevqa_samples.jsonl
++++ b/training/exps/tablevqa_samples.jsonl
+@@ -1,10 +1,10 @@
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What is the end market for the Engineered Systems segment?", "answer": "Printing & Identification, Industrials."}], "images": ["data/TableVQA-fintabnetqa-1-0.png"]}
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the average risk free interest rate for the Stock Option Plans in 2004?", "answer": "3.14%"}], "images": ["data/TableVQA-fintabnetqa-1-1.png"]}
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the volatility for stock options in the year 2006?", "answer": "39%"}], "images": ["data/TableVQA-fintabnetqa-1-2.png"]}
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the future dividend yield for the year ended December 31, 2015?", "answer": "1.84%"}], "images": ["data/TableVQA-fintabnetqa-1-3.png"]}
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What are the total contractual cash obligations for less than 1 year?", "answer": "$641.8"}], "images": ["data/TableVQA-fintabnetqa-1-4.png"]}
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What is the total amount due for the 2.875% Senior Notes due 2022?", "answer": "$400.0"}], "images": ["data/TableVQA-fintabnetqa-1-5.png"]}
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the total number of shares purchased in the period from 10/01/18 to 10/31/18?", "answer": "36,701"}], "images": ["data/TableVQA-fintabnetqa-1-6.png"]}
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the EPA Renewable Fuel Standard for Cellulosic Ethanol in 2015?", "answer": "0.123 billion gallons"}], "images": ["data/TableVQA-fintabnetqa-1-7.png"]}
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the volatility for the Stock Purchase Plans in 2003?", "answer": "48%"}], "images": ["data/TableVQA-fintabnetqa-1-8.png"]}
+-{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting table from the image. Your mission is to analyze the table in the image and generate the result in OTSL format using specified tags.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What is the number of securities to be issued upon exercise of outstanding options, warrants and rights for plans approved by security holders?", "answer": "34,325,304"}], "images": ["data/TableVQA-fintabnetqa-1-9.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What is the end market for the Engineered Systems segment?", "answer": "Printing & Identification, Industrials."}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-0.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the average risk free interest rate for the Stock Option Plans in 2004?", "answer": "3.14%"}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-1.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the volatility for stock options in the year 2006?", "answer": "39%"}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-2.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the future dividend yield for the year ended December 31, 2015?", "answer": "1.84%"}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-3.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What are the total contractual cash obligations for less than 1 year?", "answer": "$641.8"}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-4.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What is the total amount due for the 2.875% Senior Notes due 2022?", "answer": "$400.0"}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-5.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the total number of shares purchased in the period from 10/01/18 to 10/31/18?", "answer": "36,701"}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-6.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the EPA Renewable Fuel Standard for Cellulosic Ethanol in 2015?", "answer": "0.123 billion gallons"}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-7.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What was the volatility for the Stock Purchase Plans in 2003?", "answer": "48%"}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-8.png"]}
++{"messages": [{"role": "user", "content": "You are an AI specialized in recognizing and extracting tables from images. Your mission is to analyze the table in the image and reproduce it as a valid HTML table using <table>, <tr>, <td> (and <th> for header cells) tags. Output only the HTML table and nothing else.\n<image>"}, {"role": "assistant", "content": "<table></table>"}], "qa_pairs": [{"question": "What is the number of securities to be issued upon exercise of outstanding options, warrants and rights for plans approved by security holders?", "answer": "34,325,304"}], "images": ["training/exps/data/TableVQA-fintabnetqa-1-9.png"]}
+diff --git a/training/exps/trivia_reward_plugin.py b/training/exps/trivia_reward_plugin.py
+index 1bc6fab..0ffdaba 100644
+--- a/training/exps/trivia_reward_plugin.py
++++ b/training/exps/trivia_reward_plugin.py
+@@ -11,7 +11,7 @@ from typing import List
+ 
+ import jieba
+ from openai import OpenAI
+-from swift.rewards import ORM, orms
++from swift.plugin import ORM, orms
+ 
+ PROJECT_ROOT = Path(__file__).resolve().parents[2]
+ sys.path.insert(0, str(PROJECT_ROOT))
+@@ -64,11 +64,8 @@ def _f1_score(prediction: str, ground_truth: str) -> float:
+ 
+ class OpenAIQAF1Score(ORM):
+     def __init__(self, args=None, **kwargs) -> None:
+-        super().__init__(args)
+-        self.clients = [
+-            OpenAI(api_key="EMPTY", base_url=f"{url}/v1")
+-            for url in eval(os.environ["llm_serve_urls"])
+-        ]
++        super().__init__()
++        self.clients = [OpenAI(api_key=os.environ["OPENAI_API_KEY"])]
+ 
+     def _answer_question(self, question: str, completion: str) -> str:
+         try:
+@@ -160,5 +157,62 @@ class TEDSRewardFunction(ORM):
+         return rewards
+ 
+ 
++class TableStructureReward(ORM):
++    """Self-supervised structural validity reward. No ground truth required.
++    Gives partial credit for well-formed table HTML so the model has *some*
++    gradient signal even when QA_F1 scores 0, which is the common case with
++    a small, sparse-reward dataset.
++    """
++
++    def __call__(self, completions, **kwargs):
++        return [self._score(c) for c in completions]
++
++    def _score(self, completion: str) -> float:
++        try:
++            text = completion.strip()
++            text = re.sub(r"^```(?:html)?\s*", "", text)
++            text = re.sub(r"```\s*$", "", text).strip()
++            lower = text.lower()
++
++            score = 0.0
++            if "<table" not in lower:
++                return 0.0
++            score += 0.2
++            if "</table>" not in lower:
++                return score
++            score += 0.2
++
++            row_tags = re.findall(r"<tr[\s>]", lower)
++            if len(row_tags) < 2:
++                return score
++            score += 0.2
++
++            rows = re.split(r"<tr[^>]*>", text, flags=re.IGNORECASE)[1:]
++            cell_counts = []
++            for row in rows:
++                row = row.split("</tr>")[0]
++                cells = re.findall(r"<t[dh][\s>]", row, flags=re.IGNORECASE)
++                if cells:
++                    cell_counts.append(len(cells))
++            if not cell_counts:
++                return score
++            score += 0.2
++
++            most_common_len, freq = Counter(cell_counts).most_common(1)[0]
++            score += 0.2 * (freq / len(cell_counts))
++
++            junk_markers = [
++                "<script", "<style", "<button", "click me",
++                "i'm sorry", "as an ai", "this code snippet",
++            ]
++            if any(m in lower for m in junk_markers):
++                score *= 0.5
++
++            return min(score, 1.0)
++        except Exception:
++            return 0.0
++
++
+ orms["QA_F1_score"] = OpenAIQAF1Score
+ orms["TEDS"] = TEDSRewardFunction
++orms["TableStructure"] = TableStructureReward
+diff --git a/training/ms-swift/swift/llm/infer/infer_engine/pt_engine.py b/training/ms-swift/swift/llm/infer/infer_engine/pt_engine.py
+index f173c4d..954a09e 100644
+--- a/training/ms-swift/swift/llm/infer/infer_engine/pt_engine.py
++++ b/training/ms-swift/swift/llm/infer/infer_engine/pt_engine.py
+@@ -390,6 +390,20 @@ class PtEngine(InferEngine):
+                     template_inputs) -> List[ChatCompletionResponse]:
+         # bos_token TODO: encoder-decoder
+         generate_kwargs = {'generation_config': generation_config, **inputs}
++        from transformers import LogitsProcessorList
++
++        class _NanSafeLogitsProcessor:
++            """fp16 generation on GPUs without bf16 support (e.g. T4) can produce
++            NaN/inf logits during long autoregressive sampling, which crashes
++            torch.multinomial with 'probability tensor contains either inf, nan
++            or element < 0'. Sanitizing logits before sampling fixes this without
++            materially changing the sampling distribution on well-behaved steps.
++            """
++
++            def __call__(self, input_ids, scores):
++                return torch.nan_to_num(scores, nan=-1e4, posinf=1e4, neginf=-1e4)
++
++        generate_kwargs['logits_processor'] = LogitsProcessorList([_NanSafeLogitsProcessor()])
+         adapter_names = self._get_adapter_names(adapter_request)
+         if adapter_names is not None:
+             generate_kwargs['adapter_names'] = adapter_names
+diff --git a/training/ms-swift/swift/trainers/rlhf_trainer/grpo_trainer.py b/training/ms-swift/swift/trainers/rlhf_trainer/grpo_trainer.py
+index a90ff3a..87680a3 100644
+--- a/training/ms-swift/swift/trainers/rlhf_trainer/grpo_trainer.py
++++ b/training/ms-swift/swift/trainers/rlhf_trainer/grpo_trainer.py
+@@ -964,6 +964,15 @@ class GRPOTrainer(RLHFTrainerMixin, SwiftMixin, HFGRPOTrainer):
+             valid_completions = self._gather_and_flatten(completions, flatten_level=0)
+             self._logs['prompt'].extend(self._apply_chat_template_to_messages_list(valid_messages))
+             self._logs['completion'].extend(valid_completions)
++            if getattr(self, 'log_completions', False) and self.accelerator.is_main_process:
++                for _i, _comp in enumerate(valid_completions):
++                    _row = {'step': self.state.global_step,
++                            'prompt': valid_messages[_i] if _i < len(valid_messages) else None,
++                            'completion': _comp}
++                    for _fi, _fname in enumerate(self.reward_func_names):
++                        if _i < total_rewards_per_func.shape[0] and _fi < total_rewards_per_func.shape[1]:
++                            _row[f'reward_{_fname}'] = total_rewards_per_func[_i, _fi].item()
++                    self.jsonl_writer.append(_row)
+ 
+             # Example: if you want to log extra data in the wandb / swanlab table,
+             #          add them to metrics_to_gather

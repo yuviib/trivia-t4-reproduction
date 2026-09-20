@@ -1,0 +1,20 @@
+This repository is a reproduction and extension of TRivia, originally released at
+https://github.com/HKU-TASR/TRivia (mirrored at https://github.com/opendatalab/TRivia)
+under the Apache License, Version 2.0. It does not contain the upstream code; setup.sh
+fetches it at a pinned commit and applies the patch in patches/.
+
+Original paper:
+Zhang, J., Wang, B., Zhang, Q., Wu, F., Wen, Z., Lu, J., Shan, J., Zhao, Z., Yang, S.,
+Wang, Z., Miao, Z., Zhong, H., Zang, Y., Dong, X., Chow, K., & He, C. (2025).
+TRivia: Self-supervised Fine-tuning of Vision-Language Models for Table Recognition.
+arXiv:2512.01248. https://arxiv.org/abs/2512.01248
+
+Changes made relative to the upstream release are in patches/trivia-fixes.patch and
+documented in reproduction/WRITEUP.md. They include bug fixes to the reward plugin,
+dataset file, generation pipeline and completions logging, and a new self-supervised
+reward function (TableStructureReward). The scripts, results dashboard and writeup in
+reproduction/ are new. None of these changes are endorsed by or affiliated with the
+original authors.
+
+The patch touches files from the ms-swift project (https://github.com/modelscope/ms-swift),
+vendored upstream under training/ms-swift/ and licensed under Apache License, Version 2.0.
